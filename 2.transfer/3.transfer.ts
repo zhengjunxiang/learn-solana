@@ -1,14 +1,15 @@
-const {
+import {
   Connection,
   Keypair,
   SystemProgram,
   Transaction,
   sendAndConfirmTransaction,
-  LAMPORTS_PER_SOL
-} = require("@solana/web3.js");
+  LAMPORTS_PER_SOL,
+  clusterApiUrl
+} from "@solana/web3.js";
 
 // 连接到 Solana 开发网
-const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+const connection = new Connection(clusterApiUrl('devnet'));
 
 // 1. 初始化新钱包
 function createWallet() {
@@ -63,4 +64,14 @@ async function airdropSol(publicKey, amountSOL = 1) {
 
   // 从钱包A向钱包B转账 0.5 SOL
   await sendSol(walletA, walletB.publicKey, 0.5);
+
+  // 监听账户的余额变化
+  connection.onAccountChange(walletA.publicKey,(accountInfo)=>{
+    console.log('账户余额更新为:', accountInfo.lamports / LAMPORTS_PER_SOL, 'SOL');
+  })
+
+  // 监听账户的余额变化
+  connection.onAccountChange(walletB.publicKey,(accountInfo)=>{
+    console.log('账户余额更新为:', accountInfo.lamports / LAMPORTS_PER_SOL, 'SOL');
+  })
 })();
