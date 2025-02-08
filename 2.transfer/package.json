@@ -1,8 +1,8 @@
 {
   "name": "2.transfer",
   "version": "1.0.0",
-  "description": "lem : 8mXmeWDMKi6dM5sN8cByACmKqJCRBAhG8EXkFCZGpppL",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
